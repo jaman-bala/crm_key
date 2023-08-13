@@ -1,11 +1,11 @@
 from pathlib import Path
-
+import os
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-SECRET_KEY = 'django-insecure-y2nftv1u=e54j!fn!!x0eo^6pbkng5p-i_@r2)c89(nzra^2dy'
+SECRET_KEY = 'django-insecure-y2nftv1u=e54j!fn!!x0eo^6pbkng5p-i_@r2)c89(csacanzra^2dy'
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -30,7 +30,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     # время сервера
-    'django.middleware.local.localMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
 ]
 
 ROOT_URLCONF = 'backend.config.urls'
@@ -38,7 +39,7 @@ ROOT_URLCONF = 'backend.config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, "templates")],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -54,13 +55,10 @@ TEMPLATES = [
 WSGI_APPLICATION = 'backend.config.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 
@@ -87,21 +85,26 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
-LANGUAGE_CODE = 'Ru-ru'
+LANGUAGE_CODE = 'ru-RU'
 
 TIME_ZONE = 'Asia/Bishkek'
 
 USE_I18N = True
 
+USE_L10N = True
+
 USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
 
-# Default primary key field type
-# https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, '/static')
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
+
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

@@ -64,8 +64,6 @@ class Order(models.Model):
                 ("in progress", "в работе"),
                 ("need info", "нужна информация"))
 
-    # todo luchanos надо подумать над процессом движения прибора от клиента к клиенту, чтобы заявки не пропадали
-    # todo luchanos спросить у Гриши нужно ли поле для фиксации корректирующих действий? (Скорее всего да)
     device = models.ForeignKey(DeviceInField, verbose_name="Оборудование", on_delete=models.RESTRICT)
     order_description = models.TextField(verbose_name="Описание")
     created_dt = models.DateTimeField(verbose_name="Создано", auto_now_add=True)
