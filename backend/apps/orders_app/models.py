@@ -3,35 +3,31 @@ from datetime import datetime
 
 
 class Device(models.Model):
-    """Оборудование"""
+    """Отдел"""
 
     class Meta:
         db_table = "devices"
-        verbose_name = "Доступное оборудование"
-        verbose_name_plural = "Доступное оборудование"
+        verbose_name = "Отдел"
+        verbose_name_plural = "Отдел"
 
-    manufacturer = models.TextField(verbose_name="Производитель")
-    model = models.TextField(verbose_name="Модель")
+    manufacturer = models.CharField(verbose_name="Отдел", max_length=200)
 
     def __str__(self):
-        return f"{self.manufacturer} {self.model}"
+        return f"{self.manufacturer}"
 
 
 class Customer(models.Model):
-    """Конечные пользователи оборудования"""
+    """Город"""
 
     class Meta:
         db_table = "customers"
-        verbose_name = "Описание контрагента"
-        verbose_name_plural = "Описание контрагентов"
+        verbose_name = "Добавить город"
+        verbose_name_plural = "Город"
 
-    # todo идея для адреса - разбить его на блоки "город", "улица", "дом", "корпус" и т.д.
-    customer_name = models.TextField(verbose_name="Наименование организации")
-    customer_address = models.TextField(verbose_name="Адрес")
-    customer_city = models.TextField(verbose_name="Город")
+    customer_city = models.CharField(verbose_name="Город", max_length=200)
 
     def __str__(self):
-        return f"{self.customer_name} по адресу: {self.customer_address}"
+        return self.customer_city
 
 
 class DeviceInField(models.Model):
@@ -42,13 +38,12 @@ class DeviceInField(models.Model):
         verbose_name = "Оборудование в полях"
         verbose_name_plural = "Оборудование в полях"
 
-    serial_number = models.TextField(verbose_name="Серийный номер")
-    customer = models.ForeignKey(Customer, on_delete=models.RESTRICT, verbose_name="Пользователь")
-    analyzer = models.ForeignKey(Device, on_delete=models.RESTRICT, verbose_name="Оборудование")
-    owner_status = models.TextField(verbose_name="Статус принадлежности")
+    equipment = models.CharField(verbose_name="Наимеование", max_length=200)
+    serial_number = models.CharField(verbose_name="Серийный номер", max_length=200)
+    owner_status = models.TextField(verbose_name="Примичание")
 
     def __str__(self):
-        return f"{self.analyzer} с/н {self.serial_number} в {self.customer}"
+        return f"{self.equipment} с/н {self.serial_number}"
 
 
 class Order(models.Model):
@@ -64,6 +59,8 @@ class Order(models.Model):
                 ("in progress", "в работе"),
                 ("need info", "нужна информация"))
 
+    customer = models.ForeignKey(Customer, on_delete=models.RESTRICT, verbose_name="Город/Область")
+    analyzer = models.ForeignKey(Device, on_delete=models.RESTRICT, verbose_name="Отдел")
     device = models.ForeignKey(DeviceInField, verbose_name="Оборудование", on_delete=models.RESTRICT)
     order_description = models.TextField(verbose_name="Описание")
     created_dt = models.DateTimeField(verbose_name="Создано", auto_now_add=True)
