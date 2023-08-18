@@ -1,0 +1,7 @@
+<div class="related-widget-wrapper">
+  <select {{ attrs|safe }} multiple="multiple">
+    {% for widget in widget.subwidgets %}
+      <option value="{{ widget.value|escape }}">{{ widget.label|escape }}</option>
+    {% endfor %}
+  </select>
+</div>
