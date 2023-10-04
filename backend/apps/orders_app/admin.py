@@ -35,8 +35,8 @@ class OrderAdmin(admin.ModelAdmin):
     # поля для поиска
     search_fields = ('device__customer__customer_city', 'device__id', 'device__serial_number',
                      'device__analyzer__model', 'device__analyzer__manufacturer')
-    # поля для того, чтобы заменить выпадашку на ввод информации
-    raw_id_fields = ('device', 'customer', 'analyzer')
+    # поля для того, чтобы заменить выпадашку на ввод информации и делать поиск
+    autocomplete_fields = ('device', 'customer', 'analyzer')
 
 
 @admin.register(Customer)
