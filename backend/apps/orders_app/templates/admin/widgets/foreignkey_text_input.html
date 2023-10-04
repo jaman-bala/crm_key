@@ -1,0 +1,7 @@
+{% load i18n admin_static %}
+
+<input type="text" name="{{ widget.name }}" value="{{ widget.value|related_value }}" class="vForeignKeyRawIdAdminField" size="50">
+<a href="{{ widget.related_url }}?pop=1" class="related-lookup" id="lookup_{{ widget.name }}" onclick="return showRelatedObjectLookupPopup(this);">
+  <img src="{% static 'admin/img/selector-search.gif' %}" width="16" height="16" alt="{% trans 'Lookup' %}">
+</a>
+<span class="related-widget-wrapper-link">{{ widget.value }}</span>

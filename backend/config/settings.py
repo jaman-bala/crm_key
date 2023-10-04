@@ -19,6 +19,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # APP
     'backend.apps.orders_app',
+
+    #
+    'dal'
 ]
 
 MIDDLEWARE = [
